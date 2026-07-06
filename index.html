@@ -133,10 +133,7 @@ const SUPA_KEY='sb_publishable_94upVEmvp5hBoQgP3m-yRQ_OD0b5ESc'
 
 const STEPS=[
  {key:'centro', title:'Il tuo centro', sub:'Partiamo dalle basi — 30 secondi.', questions:[
-   {id:'nome', type:'text', label:'Il tuo nome', required:true, placeholder:'Emanuele D’Amico'},
-   {id:'email', type:'email', label:'La tua email', required:true, placeholder:'nome@moveo.it'},
-   {id:'centro', type:'text', label:'Nome del centro', value:'Moveo Wellness'},
-   {id:'ruolo', type:'chips', label:'Il tuo ruolo', options:['Titolare','Direttore','Trainer','Reception','Altro']},
+   {id:'email', type:'email', label:'La tua email (per gli aggiornamenti)', placeholder:'nome@moveo.it'},
    {id:'staff', type:'chips', label:'Quante persone nello staff oggi?', options:['1–2','3–4','5+']},
    {id:'clienti', type:'chips', label:'Clienti attivi che seguite', options:['meno di 50','50–150','150–300','oltre 300']},
    {id:'servizi', type:'multichips', label:'Che servizi offrite? (scegli tutti quelli attivi)', options:['PT 1:1','Pilates','Nutrizione','Corsi di gruppo','Valutazioni / InBody','Riabilitazione','Altro']},
@@ -178,6 +175,7 @@ function renderIntro(){
   app.innerHTML=`
   <div class="screen on">
     <div class="kicker"><span class="dot"></span>Prima di costruire</div>
+    <div style="font-size:15px;color:var(--ink2);margin-bottom:8px">Ciao Emanuele 👋</div>
     <h1>Vogliamo capirti <span class="hl">davvero</span>, non darti l’ennesimo gestionale.</h1>
     <p class="lead">Moveo non è una palestra qualunque: è un centro dove il rapporto con la persona conta più della sala pesi — <b>personal training, pilates, nutrizione, valutazioni</b>. Sappiamo che la squadra si è ristretta (da quattro a tre) e che ogni ora dello staff ora è preziosa: quando <b>un solo strumento</b> — la bilancia per la composizione corporea — viene prenotato da due clienti insieme, o quando calendari, pacchetti e pagamenti vivono sparsi tra app, messaggi e testa, il tempo che dovrebbe andare ai clienti si perde in amministrazione.</p>
     <p class="lead">Da qui parte il progetto: un sistema cucito su <b>come lavorate voi</b>. Prima di scrivere altro codice però vogliamo mettere a fuoco due cose — <b>dov’è Moveo oggi</b> (scenario A) e <b>dove volete arrivare</b> (scenario B). Le domande qui sotto servono a questo: a farci diventare il ponte tra i due, e a costruirvi esattamente ciò che desiderate.</p>
@@ -199,7 +197,7 @@ function renderIntro(){
     <div class="nav">
       <button class="btn btn-primary" onclick="goto(0)">Inizia →</button>
     </div>
-    <p class="tiny">Ci vogliono circa <b>5 minuti</b>. Nessuna risposta è obbligatoria oltre nome ed email.</p>
+    <p class="tiny">Ci vogliono circa <b>5 minuti</b>. Nessuna domanda è obbligatoria: rispondi a quelle che ti vengono.</p>
   </div>`
 }
 
@@ -272,21 +270,15 @@ function goto(n){
 }
 function next(){
   captureInputs()
-  if(step===0){
-    const nome=(sel['nome']||'').trim(), email=(sel['email']||'').trim()
-    if(!nome||!/.+@.+\..+/.test(email)){document.getElementById('err').classList.add('show');return}
-  }
   if(step<STEPS.length-1){goto(step+1)}else{submitAll()}
 }
 
 function collect(){
-  const answers=[];let name='',email='',centro='Moveo Wellness'
+  const answers=[];let email='';const name='Emanuele D’Amico', centro='Moveo Wellness'
   STEPS.forEach(s=>s.questions.forEach(q=>{
     let v=sel[q.id]
     if(q.type==='multichips') v=[...(multi[q.id]||[])].join(', ')
-    if(q.id==='nome')name=v||''
-    else if(q.id==='email')email=v||''
-    else if(q.id==='centro')centro=v||'Moveo Wellness'
+    if(q.id==='email')email=v||''
     else answers.push({sezione:s.title, domanda:q.label, risposta:(v===undefined||v==='')?'—':v})
   }))
   return {respondent_name:name, respondent_email:email, center_name:centro, answers, user_agent:navigator.userAgent}
