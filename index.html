@@ -134,7 +134,7 @@ const STEPS=[
  ]},
  {key:'costo', title:'Quanto vi costa oggi', sub:'Qualche numero che ci serve per mettervi, nero su bianco, quanto pesa davvero la situazione attuale.', badge:'€', questions:[
    {id:'spesa_software', type:'text', label:'Quanto spendete oggi, all’anno, per i gestionali attuali?', prefill:'Oltre €20.000/anno (TeamSystem + app Technogym)'},
-   {id:'coordinamento', type:'textarea', label:'Quanto lavoro “a mano” serve per far dialogare clienti, staff e gestionale?', prefill:'Servirebbero circa 2 persone dedicate solo a coordinare le prenotazioni, facendo da ponte tra cliente, staff e software.'},
+   {id:'coordinamento', type:'textarea', label:'Quanto lavoro “a mano” serve oggi per far dialogare clienti, staff e gestionale?', prefill:'Ci sono già circa 2 persone dedicate solo a coordinare le prenotazioni a mano, facendo da ponte tra cliente, staff e software.'},
    {id:'quota_manuale', type:'chips', label:'Quante prenotazioni gestite ancora a mano (messaggi, telefonate, reception)?', options:['Praticamente tutte','La maggior parte','Circa metà','Poche'], prefill:'Praticamente tutte'},
    {id:'clienti_persi', type:'chips', label:'Vi capita di perdere prenotazioni o clienti perché non riescono a prenotare da soli?', options:['Spesso','Ogni tanto','Raramente','Mai']},
  ]},
@@ -144,16 +144,16 @@ const STEPS=[
    {id:'bacchetta', type:'textarea', label:'Bacchetta magica: quali 3 cose fareste sparire (o partire da sole) domani mattina?', prefill:'Le conferme di prenotazione fatte a mano; i due software separati che non si parlano; il bisogno di una persona alla reception perché il cliente possa prenotare.'},
  ]},
  {key:'ruoli', title:'Chi vede cosa', sub:'Il sistema mostra a ognuno solo ciò che gli serve. Qui trovi già la nostra proposta: confermala o correggila.', questions:[
-   {id:'r_reception', type:'textarea', label:'Cosa deve poter vedere e fare la RECEPTION?', prefill:'Prenotare e spostare appuntamenti per i clienti, vedere il calendario di tutto lo staff, incassare e registrare i pagamenti, vendere pacchetti e gettoni, gestire il bar.'},
-   {id:'r_trainer', type:'textarea', label:'Cosa deve poter vedere e fare il TRAINER / NUTRIZIONISTA?', prefill:'Solo il proprio calendario e i propri clienti, inserire le misurazioni e le schede (allenamento e alimentazione), seguire i progressi di ogni cliente.'},
    {id:'r_cliente', type:'textarea', label:'Cosa deve poter vedere e fare il CLIENTE?', prefill:'Prenotarsi da solo usando i gettoni, vedere le proprie prenotazioni e i propri progressi, comprare altri gettoni o pacchetti, consultare la scheda di allenamento e quella alimentare.'},
+   {id:'r_trainer', type:'textarea', label:'Cosa deve poter vedere e fare il TRAINER / NUTRIZIONISTA?', prefill:'Solo il proprio calendario e i propri clienti, inserire le misurazioni e le schede (allenamento e alimentazione), seguire i progressi di ogni cliente.'},
+   {id:'r_reception', type:'textarea', label:'Cosa deve poter vedere e fare la RECEPTION?', prefill:'Prenotare e spostare appuntamenti per i clienti, vedere il calendario di tutto lo staff, incassare e registrare i pagamenti, vendere pacchetti e gettoni, gestire il bar.'},
    {id:'r_titolare', type:'textarea', label:'Cosa devi poter vedere e fare TU, come titolare che governa tutto?', prefill:'Vista completa su tutto: calendario di tutti, gestione di staff e servizi, pagamenti e fatturazione, assegnazione dei gettoni, e i numeri sull’andamento del centro.'},
  ]},
  {key:'progetto', title:'Il progetto', sub:'Ultime cose, poi partiamo.', questions:[
    {id:'partenza', type:'chips', label:'Quando vorreste partire?', options:['Subito','Entro 1 mese','Entro 3 mesi','Sto valutando']},
    {id:'tempo_attesa', type:'chips', label:'Quanto tempo, al massimo, siete disposti ad aspettare per una versione completa e funzionante?', options:['Prima possibile','Entro 1 mese','Entro 2–3 mesi','Non ho fretta, se è fatto bene']},
    {id:'gestione_post', type:'chips', label:'Dopo il lancio, come immaginate la gestione del sistema?', options:['La gestiamo noi internamente (formateci)','La affidiamo a voi: gestione ed evoluzione continue','Da valutare insieme']},
-   {id:'hosting', type:'chips', label:'Dove vorreste che giri il sistema?', options:['Server virtuale (cloud)','Il nostro server locale','Vogliamo capire insieme quale conviene'], hint:'Se avete un server locale e volete usarlo o confrontarlo, i dettagli tecnici (spazio, potenza) potete farceli sapere anche dopo — magari chiedendo al vostro sistemista. Non servono per partire.'},
+   {id:'hosting', type:'chips', label:'Dove vorreste che giri il sistema?', options:['Server virtuale (cloud)','Il server locale di Moveo','Vogliamo capire insieme quale conviene'], hint:'Se volete usare il vostro server locale (o confrontarlo col cloud), i dettagli tecnici (spazio, potenza) potete farceli sapere anche dopo — magari chiedendo al vostro sistemista. Non servono per partire.'},
    {id:'altro', type:'textarea', label:'C’è altro che dovremmo sapere prima di metterci a costruire?'},
  ]},
 ]
@@ -171,7 +171,7 @@ function renderIntro(){
     <div class="kicker"><span class="dot"></span>Prima di costruire</div>
     <div style="font-size:15px;color:var(--ink2);margin-bottom:8px">Ciao Emanuele 👋</div>
     <h1>Vogliamo capirti <span class="hl">davvero</span>, non darti l’ennesimo gestionale.</h1>
-    <p class="lead">Moveo non è una palestra qualunque: è un centro dove il rapporto con la persona conta più della sala pesi — <b>personal training, pilates, nutrizione, valutazioni</b> — con uno staff di più persone da far girare ogni giorno. Oggi però quasi tutto passa dalle mani: le prenotazioni si fanno, si controllano e si confermano a mano, al punto che per reggere il ritmo servirebbero <b>due persone dedicate solo a fare da ponte</b> tra clienti, staff e gestionale. E questo nonostante oltre <b>€20.000 l’anno</b> di licenze — TeamSystem e l’app Technogym — che tra loro si parlano male, con una gestione a gettoni sopra e clienti che, senza qualcuno alla reception, non riescono a prenotare da soli.</p>
+    <p class="lead">Moveo non è una palestra qualunque: è un centro dove il rapporto con la persona conta più della sala pesi — <b>personal training, pilates, nutrizione, valutazioni</b> — con uno staff di più persone da far girare ogni giorno. Oggi però quasi tutto passa dalle mani: le prenotazioni si fanno, si controllano e si confermano a mano, tanto che oggi ci sono già <b>due persone dedicate solo a fare da ponte</b> tra clienti, staff e gestionale. E questo nonostante oltre <b>€20.000 l’anno</b> di licenze — TeamSystem e l’app Technogym — che tra loro si parlano male, con una gestione a gettoni sopra e clienti che, senza qualcuno alla reception, non riescono a prenotare da soli.</p>
     <p class="lead">Il vostro obiettivo, se abbiamo capito bene, è chiaro: liberarvi di quei due software e portare tutto dentro <b>un’unica app vostra</b>, di proprietà, da personalizzare e far evolvere su ciò che vi serve davvero. Questo questionario serve a mettere a fuoco due cose — <b>dove siete oggi</b> (scenario A) e <b>dove volete arrivare</b> (scenario B) — così da farci diventare il ponte tra i due.</p>
     <div class="bridge">
       <svg viewBox="0 0 560 130" role="img" aria-label="Dal punto A al punto B">
