@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Moveo Wellness — Questionario</title>
+<meta name="description" content="Prima di costruire, vogliamo capirti davvero. 5 minuti per disegnare insieme il sistema di Moveo Wellness.">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#080808;--bg2:#0e0e0e;--card:#151515;--card2:#1b1b1b;
+  --border:#242424;--border2:#333;
+  --ink:#f2f2f2;--ink2:#a6a6a6;--ink3:#6a6a6a;
+  --accent:#8FFF00;--accent-dim:rgba(143,255,0,.12);--accent-dim2:rgba(143,255,0,.22);
+  --on-accent:#080808;--ok:#3ecf8e;
+  --r:14px;--maxw:640px;
+}
+html,body{height:100%}
+body{
+  background:var(--bg);color:var(--ink);
+  font:16px/1.6 -apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,sans-serif;
+  -webkit-font-smoothing:antialiased;
+  background-image:radial-gradient(900px 500px at 50% -8%,rgba(143,255,0,.08),transparent 70%);
+  min-height:100vh;
+}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:22px 20px 80px}
+/* top bar */
+.top{display:flex;align-items:center;gap:10px;padding:6px 0 18px}
+.logo{font-weight:800;letter-spacing:-.5px;font-size:18px}
+.logo b{color:var(--accent)}
+.top .kick{margin-left:auto;font-size:11px;color:var(--ink3);text-transform:uppercase;letter-spacing:1.2px}
+/* progress */
+.prog{height:4px;background:var(--card);border-radius:4px;overflow:hidden;margin-bottom:26px}
+.prog>i{display:block;height:100%;width:0;background:var(--accent);border-radius:4px;transition:width .5s cubic-bezier(.4,0,.2,1)}
+.prog.hide{opacity:0}
+/* screens */
+.screen{display:none;animation:fadeUp .5s cubic-bezier(.2,.7,.2,1)}
+.screen.on{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes pop{0%{transform:scale(.9);opacity:0}100%{transform:scale(1);opacity:1}}
+/* intro */
+.kicker{display:inline-flex;align-items:center;gap:8px;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:16px}
+.kicker .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 0 var(--accent);animation:pulse 2.4s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(143,255,0,.5)}70%{box-shadow:0 0 0 9px rgba(143,255,0,0)}100%{box-shadow:0 0 0 0 rgba(143,255,0,0)}}
+h1{font-size:31px;line-height:1.18;font-weight:800;letter-spacing:-.8px;text-wrap:balance;margin-bottom:18px}
+h1 .hl{color:var(--accent)}
+.lead{color:var(--ink2);font-size:16px;margin-bottom:14px}
+.lead b{color:var(--ink);font-weight:600}
+/* bridge svg */
+.bridge{margin:26px 0;background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:20px 18px}
+.bridge svg{width:100%;height:auto;display:block}
+.b-node{font:600 13px sans-serif}
+.b-sub{font:400 10px sans-serif;fill:var(--ink3)}
+.b-you{font:700 11px sans-serif;letter-spacing:.5px}
+.dash{stroke-dasharray:7 7;animation:flow 1.1s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-28}}
+.draw{stroke-dasharray:230;stroke-dashoffset:230;animation:draw 1.4s .3s ease forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:none;cursor:pointer;
+  font:600 15px/1 inherit;padding:14px 22px;border-radius:12px;transition:transform .12s,opacity .15s,background .15s}
+.btn:active{transform:translateY(1px) scale(.99)}
+.btn-primary{background:var(--accent);color:var(--on-accent)}
+.btn-primary:hover{opacity:.9}
+.btn-ghost{background:transparent;border:1px solid var(--border2);color:var(--ink2)}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
+.btn:disabled{opacity:.45;cursor:default}
+.nav{display:flex;gap:10px;align-items:center;margin-top:26px}
+.nav .btn-primary{margin-left:auto}
+.tiny{font-size:12.5px;color:var(--ink3);margin-top:14px}
+.tiny b{color:var(--ink2)}
+/* step header */
+.step-h{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+.step-badge{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;
+  font-weight:800;font-size:15px;background:var(--accent-dim2);color:var(--accent);flex-shrink:0}
+.step-h h2{font-size:21px;font-weight:700;letter-spacing:-.4px}
+.step-sub{color:var(--ink3);font-size:13.5px;margin-bottom:22px}
+.count{margin-left:auto;font-size:12px;color:var(--ink3)}
+/* questions */
+.q{margin-bottom:22px;opacity:0;animation:fadeUp .45s forwards}
+.q label.ql{display:block;font-size:14.5px;font-weight:600;margin-bottom:9px;color:var(--ink)}
+.q .req{color:var(--accent)}
+input[type=text],input[type=email],textarea{
+  width:100%;background:var(--card);border:1px solid var(--border);border-radius:11px;
+  padding:12px 14px;color:var(--ink);font:inherit;font-size:15px;outline:none;transition:border-color .15s,box-shadow .15s}
+textarea{min-height:78px;resize:vertical;line-height:1.5}
+input:focus,textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-dim)}
+input::placeholder,textarea::placeholder{color:var(--ink3)}
+/* chips */
+.chips{display:flex;flex-wrap:wrap;gap:9px}
+.chip{padding:10px 15px;border-radius:22px;border:1px solid var(--border2);background:var(--card);
+  color:var(--ink2);font-size:14px;cursor:pointer;transition:all .15s;user-select:none}
+.chip:hover{border-color:var(--ink3);color:var(--ink)}
+.chip.sel{background:var(--accent);border-color:var(--accent);color:var(--on-accent);font-weight:600;animation:pop .2s}
+/* slider */
+.slide-wrap{display:flex;align-items:center;gap:16px}
+input[type=range]{-webkit-appearance:none;appearance:none;flex:1;height:6px;border-radius:6px;background:var(--card2);outline:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:var(--accent);cursor:pointer;box-shadow:0 0 0 4px var(--accent-dim)}
+input[type=range]::-moz-range-thumb{width:22px;height:22px;border:none;border-radius:50%;background:var(--accent);cursor:pointer}
+.slide-val{min-width:64px;text-align:right;font-weight:700;font-size:19px;color:var(--accent);font-variant-numeric:tabular-nums}
+/* scale */
+.scale{display:flex;gap:6px;flex-wrap:wrap}
+.scale .sc{width:40px;height:40px;border-radius:10px;border:1px solid var(--border2);background:var(--card);
+  color:var(--ink2);font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .13s}
+.scale .sc:hover{border-color:var(--ink3)}
+.scale .sc.sel{background:var(--accent);border-color:var(--accent);color:var(--on-accent);animation:pop .2s}
+/* thank you */
+.done{text-align:center;padding:30px 0}
+.done .ring{width:82px;height:82px;border-radius:50%;background:var(--accent-dim2);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;animation:pop .5s}
+.done .ring svg{width:40px;height:40px}
+.done h1{font-size:26px}
+.err{background:rgba(232,64,64,.12);border:1px solid rgba(232,64,64,.4);color:#ff9a9a;border-radius:10px;padding:11px 14px;font-size:13.5px;margin-top:14px;display:none}
+.err.show{display:block}
+.foot{text-align:center;font-size:11px;color:var(--ink3);margin-top:40px;letter-spacing:.3px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media (max-width:480px){h1{font-size:26px}.wrap{padding:18px 16px 70px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div class="logo">Moveo<b>·</b>Wellness</div>
+    <div class="kick">Questionario · 5 min</div>
+  </div>
+  <div class="prog hide" id="prog"><i id="progBar"></i></div>
+  <div id="app"></div>
+  <div class="foot">Le tue risposte arrivano solo al team che costruirà il sistema. Nessun dato condiviso con terzi.</div>
+</div>
+
+<script>
+const SUPA_URL='https://rwnlmppyehavdgjumcow.supabase.co'
+const SUPA_KEY='sb_publishable_94upVEmvp5hBoQgP3m-yRQ_OD0b5ESc'
+
+const STEPS=[
+ {key:'centro', title:'Il tuo centro', sub:'Partiamo dalle basi — 30 secondi.', questions:[
+   {id:'nome', type:'text', label:'Il tuo nome', required:true, placeholder:'Emanuele D’Amico'},
+   {id:'email', type:'email', label:'La tua email', required:true, placeholder:'nome@moveo.it'},
+   {id:'centro', type:'text', label:'Nome del centro', value:'Moveo Wellness'},
+   {id:'ruolo', type:'chips', label:'Il tuo ruolo', options:['Titolare','Direttore','Trainer','Reception','Altro']},
+   {id:'staff', type:'chips', label:'Quante persone nello staff oggi?', options:['1–2','3–4','5+']},
+   {id:'clienti', type:'chips', label:'Clienti attivi che seguite', options:['meno di 50','50–150','150–300','oltre 300']},
+   {id:'servizi', type:'multichips', label:'Che servizi offrite? (scegli tutti quelli attivi)', options:['PT 1:1','Pilates','Nutrizione','Corsi di gruppo','Valutazioni / InBody','Riabilitazione','Altro']},
+ ]},
+ {key:'oggi', title:'Come lavorate oggi', sub:'La fotografia del presente. Sii pure crudo: ci serve il vero.', badge:'A', questions:[
+   {id:'strumenti', type:'textarea', label:'Che strumenti usate per gestire prenotazioni, clienti e pagamenti?', placeholder:'App attuale, Excel, WhatsApp, agenda cartacea…'},
+   {id:'come_prenotano', type:'multichips', label:'Come prenotano i clienti oggi?', options:['WhatsApp','Telefono','App attuale','Di persona in reception','Non prenotano davvero']},
+   {id:'bottleneck', type:'chips', label:'Vi capita che un’unica attrezzatura (es. la bilancia per la composizione corporea) venga prenotata da due clienti insieme?', options:['Spesso','Ogni tanto','Raramente','Mai']},
+   {id:'perditempo', type:'textarea', label:'Cosa vi fa perdere PIÙ tempo ogni settimana?', placeholder:'La cosa che vorreste smettere di fare a mano…'},
+   {id:'ore_admin', type:'slider', label:'Ore a settimana che se ne vanno in gestione e amministrazione manuale', min:0, max:20, val:6, suffix:' h'},
+   {id:'confusione', type:'textarea', label:'Cosa si rompe o crea confusione più spesso?', placeholder:'Doppie prenotazioni, no-show, pagamenti persi, comunicazione…'},
+ ]},
+ {key:'domani', title:'Dove volete arrivare', sub:'La meta. Qui sogna in grande: è il punto B che dobbiamo raggiungere.', badge:'B', questions:[
+   {id:'visione', type:'textarea', label:'Immagina Moveo tra 12 mesi con «tutto che funziona». Com’è una vostra giornata ideale?', placeholder:'Racconta come vorresti che filasse tutto…'},
+   {id:'bacchetta', type:'textarea', label:'Se aveste una bacchetta magica, quali 3 cose automatizzereste subito?'},
+   {id:'esperienza', type:'multichips', label:'Che esperienza volete far vivere al cliente?', options:['Prenotazione autonoma da app','Reminder automatici','Vedere i propri progressi','Acquistare pacchetti online','Chat diretta col trainer','Scheda allenamento + nutrizione in app']},
+   {id:'libera_tempo', type:'textarea', label:'Cosa vi libererebbe più tempo, se sparisse domani?'},
+   {id:'crescita', type:'chips', label:'Obiettivo dei prossimi 12 mesi', options:['Consolidare','Più clienti','Più servizi','Nuova sede','Da capire insieme']},
+   {id:'premium', type:'scale', label:'Quanto conta che i clienti percepiscano Moveo come premium e tecnologico?', min:1, max:10, val:7},
+ ]},
+ {key:'priorita', title:'Priorità & partenza', sub:'Ultimo passo, promesso.', questions:[
+   {id:'prima_cosa', type:'textarea', label:'Se potessimo risolvere UNA sola cosa per prima, quale sarebbe?'},
+   {id:'partenza', type:'chips', label:'Quando vorreste partire?', options:['Subito','Entro 1 mese','Entro 3 mesi','Sto valutando']},
+   {id:'contatto', type:'chips', label:'Come preferisci che ti aggiorniamo?', options:['WhatsApp','Email','Chiamata']},
+   {id:'altro', type:'textarea', label:'Qualcos’altro che dovremmo sapere prima di costruire?'},
+ ]},
+]
+
+const sel={}   // id -> value (chips/scale/slider)
+const multi={} // id -> Set (multichips)
+let step=-1    // -1 = intro
+const app=document.getElementById('app')
+const progWrap=document.getElementById('prog'), progBar=document.getElementById('progBar')
+
+function esc(s){return (s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+
+function renderIntro(){
+  progWrap.classList.add('hide')
+  app.innerHTML=`
+  <div class="screen on">
+    <div class="kicker"><span class="dot"></span>Prima di costruire</div>
+    <h1>Vogliamo capirti <span class="hl">davvero</span>, non darti l’ennesimo gestionale.</h1>
+    <p class="lead">Moveo non è una palestra qualunque: è un centro dove il rapporto con la persona conta più della sala pesi — <b>personal training, pilates, nutrizione, valutazioni</b>. Sappiamo che la squadra si è ristretta (da quattro a tre) e che ogni ora dello staff ora è preziosa: quando <b>un solo strumento</b> — la bilancia per la composizione corporea — viene prenotato da due clienti insieme, o quando calendari, pacchetti e pagamenti vivono sparsi tra app, messaggi e testa, il tempo che dovrebbe andare ai clienti si perde in amministrazione.</p>
+    <p class="lead">Da qui parte il progetto: un sistema cucito su <b>come lavorate voi</b>. Prima di scrivere altro codice però vogliamo mettere a fuoco due cose — <b>dov’è Moveo oggi</b> (scenario A) e <b>dove volete arrivare</b> (scenario B). Le domande qui sotto servono a questo: a farci diventare il ponte tra i due, e a costruirvi esattamente ciò che desiderate.</p>
+    <div class="bridge">
+      <svg viewBox="0 0 560 130" role="img" aria-label="Dal punto A al punto B">
+        <line x1="70" y1="70" x2="490" y2="70" stroke="#2a2a2a" stroke-width="2"/>
+        <line class="draw" x1="70" y1="70" x2="490" y2="70" stroke="#8FFF00" stroke-width="2"/>
+        <line class="dash" x1="120" y1="70" x2="440" y2="70" stroke="#8FFF00" stroke-width="2" opacity=".5"/>
+        <circle cx="70" cy="70" r="13" fill="#151515" stroke="#8FFF00" stroke-width="2"/>
+        <text class="b-node" x="70" y="75" text-anchor="middle" fill="#8FFF00">A</text>
+        <text class="b-sub" x="70" y="102" text-anchor="middle">Oggi</text>
+        <circle cx="490" cy="70" r="13" fill="#8FFF00"/>
+        <text class="b-node" x="490" y="75" text-anchor="middle" fill="#080808">B</text>
+        <text class="b-sub" x="490" y="102" text-anchor="middle">Dove volete arrivare</text>
+        <text class="b-you" x="280" y="48" text-anchor="middle" fill="#8FFF00">il ponte = noi</text>
+        <path d="M255 54 L280 60 L305 54" fill="none" stroke="#8FFF00" stroke-width="1.5" opacity=".7"/>
+      </svg>
+    </div>
+    <div class="nav">
+      <button class="btn btn-primary" onclick="goto(0)">Inizia →</button>
+    </div>
+    <p class="tiny">Ci vogliono circa <b>5 minuti</b>. Nessuna risposta è obbligatoria oltre nome ed email.</p>
+  </div>`
+}
+
+function fieldHTML(q,i){
+  let inner=''
+  if(q.type==='text'||q.type==='email'){
+    inner=`<input type="${q.type}" id="f_${q.id}" placeholder="${esc(q.placeholder||'')}" value="${esc(q.value||'')}">`
+  }else if(q.type==='textarea'){
+    inner=`<textarea id="f_${q.id}" placeholder="${esc(q.placeholder||'')}"></textarea>`
+  }else if(q.type==='chips'){
+    inner=`<div class="chips">${q.options.map(o=>`<div class="chip ${sel[q.id]===o?'sel':''}" onclick="pick('${q.id}','${esc(o)}',this)">${o}</div>`).join('')}</div>`
+  }else if(q.type==='multichips'){
+    const set=multi[q.id]||new Set()
+    inner=`<div class="chips">${q.options.map(o=>`<div class="chip ${set.has(o)?'sel':''}" onclick="pickMulti('${q.id}','${esc(o)}',this)">${o}</div>`).join('')}</div>`
+  }else if(q.type==='slider'){
+    const v=sel[q.id]!=null?sel[q.id]:q.val
+    inner=`<div class="slide-wrap"><input type="range" min="${q.min}" max="${q.max}" value="${v}" id="f_${q.id}" oninput="slide('${q.id}',this.value,'${q.suffix||''}')"><div class="slide-val" id="v_${q.id}">${v}${q.suffix||''}</div></div>`
+  }else if(q.type==='scale'){
+    const v=sel[q.id]
+    let sc='';for(let n=q.min;n<=q.max;n++) sc+=`<div class="sc ${v===n?'sel':''}" onclick="pick('${q.id}',${n},this)">${n}</div>`
+    inner=`<div class="scale">${sc}</div>`
+  }
+  return `<div class="q" style="animation-delay:${i*.06}s"><label class="ql">${q.label}${q.required?' <span class="req">*</span>':''}</label>${inner}</div>`
+}
+
+function renderStep(){
+  const s=STEPS[step]
+  progWrap.classList.remove('hide')
+  progBar.style.width=((step+1)/STEPS.length*100)+'%'
+  app.innerHTML=`
+  <div class="screen on">
+    <div class="step-h">
+      ${s.badge?`<div class="step-badge">${s.badge}</div>`:''}
+      <h2>${s.title}</h2>
+      <span class="count">${step+1} / ${STEPS.length}</span>
+    </div>
+    <div class="step-sub">${s.sub}</div>
+    ${s.questions.map(fieldHTML).join('')}
+    <div class="err" id="err">Inserisci nome ed email per continuare.</div>
+    <div class="nav">
+      <button class="btn btn-ghost" onclick="goto(${step-1})">← Indietro</button>
+      <button class="btn btn-primary" id="nextBtn" onclick="next()">${step===STEPS.length-1?'Invia le risposte':'Avanti →'}</button>
+    </div>
+  </div>`
+  // restore textareas/inputs
+  s.questions.forEach(q=>{
+    if((q.type==='textarea'||q.type==='text'||q.type==='email')&&sel[q.id]!=null){
+      const el=document.getElementById('f_'+q.id); if(el)el.value=sel[q.id]
+    }
+  })
+  window.scrollTo({top:0,behavior:'smooth'})
+}
+
+function captureInputs(){
+  const s=STEPS[step]; if(!s)return
+  s.questions.forEach(q=>{
+    if(q.type==='textarea'||q.type==='text'||q.type==='email'||q.type==='slider'){
+      const el=document.getElementById('f_'+q.id); if(el)sel[q.id]=el.value
+    }
+  })
+}
+function pick(id,val,el){sel[id]=val;el.parentNode.querySelectorAll('.chip,.sc').forEach(c=>c.classList.remove('sel'));el.classList.add('sel')}
+function pickMulti(id,val,el){if(!multi[id])multi[id]=new Set();const s=multi[id];if(s.has(val)){s.delete(val);el.classList.remove('sel')}else{s.add(val);el.classList.add('sel')}}
+function slide(id,val,suf){sel[id]=val;const v=document.getElementById('v_'+id);if(v)v.textContent=val+suf}
+
+function goto(n){
+  captureInputs()
+  if(n<0){step=-1;renderIntro();return}
+  step=n;renderStep()
+}
+function next(){
+  captureInputs()
+  if(step===0){
+    const nome=(sel['nome']||'').trim(), email=(sel['email']||'').trim()
+    if(!nome||!/.+@.+\..+/.test(email)){document.getElementById('err').classList.add('show');return}
+  }
+  if(step<STEPS.length-1){goto(step+1)}else{submitAll()}
+}
+
+function collect(){
+  const answers=[];let name='',email='',centro='Moveo Wellness'
+  STEPS.forEach(s=>s.questions.forEach(q=>{
+    let v=sel[q.id]
+    if(q.type==='multichips') v=[...(multi[q.id]||[])].join(', ')
+    if(q.id==='nome')name=v||''
+    else if(q.id==='email')email=v||''
+    else if(q.id==='centro')centro=v||'Moveo Wellness'
+    else answers.push({sezione:s.title, domanda:q.label, risposta:(v===undefined||v==='')?'—':v})
+  }))
+  return {respondent_name:name, respondent_email:email, center_name:centro, answers, user_agent:navigator.userAgent}
+}
+
+async function submitAll(){
+  const btn=document.getElementById('nextBtn'); btn.disabled=true; btn.textContent='Invio…'
+  const payload=collect()
+  try{
+    const res=await fetch(SUPA_URL+'/rest/v1/moveo_discovery',{
+      method:'POST',
+      headers:{'apikey':SUPA_KEY,'Authorization':'Bearer '+SUPA_KEY,'Content-Type':'application/json','Prefer':'return=minimal'},
+      body:JSON.stringify(payload)
+    })
+    if(!res.ok) throw new Error('HTTP '+res.status+' '+await res.text())
+    renderDone(payload.respondent_name)
+  }catch(e){
+    btn.disabled=false; btn.textContent='Riprova invio'
+    const err=document.getElementById('err'); err.textContent='Ops, invio non riuscito. Controlla la connessione e riprova. ('+e.message+')'; err.classList.add('show')
+  }
+}
+
+function renderDone(nome){
+  progBar.style.width='100%'
+  app.innerHTML=`
+  <div class="screen on done">
+    <div class="ring"><svg viewBox="0 0 24 24" fill="none"><path d="M4 12.5l5 5L20 6.5" stroke="#8FFF00" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <h1>Grazie${nome?', '+esc(nome.split(' ')[0]):''}. Ci mettiamo al lavoro.</h1>
+    <p class="lead" style="max-width:440px;margin:12px auto 0">Con quello che ci hai raccontato disegniamo il ponte tra dove siete oggi e dove volete arrivare. <b>La prima demo cliccabile è già in costruzione</b>: te la mostriamo questa settimana.</p>
+    <p class="tiny">Puoi chiudere questa pagina. Ci sentiamo prestissimo. 🟢</p>
+  </div>`
+  window.scrollTo({top:0,behavior:'smooth'})
+}
+
+renderIntro()
+</script>
+</body>
+</html>
