@@ -71,6 +71,7 @@ h1 .hl{color:var(--accent)}
 .count{margin-left:auto;font-size:12px;color:var(--ink3)}
 .q{margin-bottom:22px;opacity:0;animation:fadeUp .45s forwards}
 .q label.ql{display:block;font-size:14.5px;font-weight:600;margin-bottom:9px;color:var(--ink)}
+.qhint{font-size:12px;color:var(--ink3);margin:-3px 0 9px;line-height:1.45}
 .pretag{display:inline-block;margin-left:6px;font-size:10px;font-weight:700;color:var(--accent);background:var(--accent-dim);border:1px solid var(--accent-dim2);padding:1px 7px;border-radius:20px;vertical-align:middle;letter-spacing:.3px;text-transform:uppercase}
 input[type=text],input[type=email],textarea{width:100%;background:var(--card);border:1px solid var(--border);border-radius:11px;padding:12px 14px;color:var(--ink);font:inherit;font-size:15px;outline:none;transition:border-color .15s,box-shadow .15s}
 textarea{min-height:78px;resize:vertical;line-height:1.5}
@@ -119,9 +120,10 @@ const SUPA_KEY='sb_publishable_94upVEmvp5hBoQgP3m-yRQ_OD0b5ESc'
 const STEPS=[
  {key:'centro', title:'Il tuo centro', sub:'Un paio di conferme veloci.', questions:[
    {id:'email', type:'email', label:'La tua email (per gli aggiornamenti)', placeholder:'nome@moveo.it'},
-   {id:'staff', type:'chips', label:'Quante persone nello staff, oggi?', options:['1–2','3–4','5+'], prefill:'3–4'},
+   {id:'staff', type:'chips', label:'Quante persone nello staff, oggi?', options:['1–2','3–4','5+'], prefill:'5+'},
    {id:'clienti', type:'chips', label:'Clienti attivi che seguite', options:['meno di 50','50–150','150–300','oltre 300']},
    {id:'servizi', type:'multichips', label:'Che servizi offrite? (segna tutti quelli attivi)', options:['PT 1:1','Pilates','Nutrizione','Corsi di gruppo','Valutazioni / InBody','Riabilitazione','Altro'], prefill:['PT 1:1','Pilates','Nutrizione','Valutazioni / InBody']},
+   {id:'servizi_altro', type:'text', label:'Se avete segnato «Altro», quali?', placeholder:'Es. massoterapia, EMS, osteopatia, corsi speciali…'},
  ]},
  {key:'oggi', title:'Come lavorate oggi', sub:'La fotografia del presente. Diccela senza filtri: ci serve il quadro vero.', badge:'A', questions:[
    {id:'strumenti', type:'textarea', label:'Con cosa gestite prenotazioni, clienti e pagamenti? Sappiamo di TeamSystem e dell’app Technogym — c’è altro nel giro di ogni giorno (Excel, WhatsApp, agenda cartacea, altri programmi)?', prefill:'TeamSystem · app Technogym'},
@@ -130,12 +132,16 @@ const STEPS=[
    {id:'ore_admin', type:'slider', label:'Ore a settimana che se ne vanno in gestione e scartoffie', min:0, max:20, val:6, suffix:' h'},
    {id:'intoppi', type:'textarea', label:'Cosa va storto più spesso, o vi crea più confusione?', placeholder:'Doppie prenotazioni, chi non si presenta, pagamenti che sfuggono, comunicazioni perse…'},
  ]},
- {key:'domani', title:'Dove volete arrivare', sub:'La meta, in concreto. Meglio poche cose precise che un grande sogno vago.', badge:'B', questions:[
-   {id:'crescita', type:'chips', label:'L’obiettivo dei prossimi 12 mesi', options:['Consolidare','Più clienti','Più servizi','Nuova sede','Da capire insieme']},
-   {id:'numeri', type:'multichips', label:'Quali numeri vorreste far crescere per primi?', options:['Numero di clienti','Sedute a settimana','Fatturato','Rinnovi / fidelizzazione','Servizi offerti']},
-   {id:'gap', type:'textarea', label:'Cosa vorreste poter fare che oggi, con gli strumenti attuali, non riuscite a fare?', placeholder:'Es. far prenotare i clienti da soli, vedere i progressi tutti in un posto…'},
-   {id:'bacchetta', type:'textarea', label:'Bacchetta magica: quali 3 cose fareste sparire (o partire da sole) domani mattina?'},
-   {id:'premium', type:'scale', label:'Quanto conta, per voi, che il cliente senta Moveo come un posto curato e all’avanguardia?', min:1, max:10, val:7},
+ {key:'costo', title:'Quanto vi costa oggi', sub:'Qualche numero che ci serve per mettervi, nero su bianco, quanto pesa davvero la situazione attuale.', badge:'€', questions:[
+   {id:'spesa_software', type:'text', label:'Quanto spendete oggi, all’anno, per i gestionali attuali?', prefill:'Oltre €20.000/anno (TeamSystem + app Technogym)'},
+   {id:'coordinamento', type:'textarea', label:'Quanto lavoro “a mano” serve per far dialogare clienti, staff e gestionale?', prefill:'Servirebbero circa 2 persone dedicate solo a coordinare le prenotazioni, facendo da ponte tra cliente, staff e software.'},
+   {id:'quota_manuale', type:'chips', label:'Quante prenotazioni gestite ancora a mano (messaggi, telefonate, reception)?', options:['Praticamente tutte','La maggior parte','Circa metà','Poche'], prefill:'Praticamente tutte'},
+   {id:'clienti_persi', type:'chips', label:'Vi capita di perdere prenotazioni o clienti perché non riescono a prenotare da soli?', options:['Spesso','Ogni tanto','Raramente','Mai']},
+ ]},
+ {key:'domani', title:'Dove volete arrivare', sub:'La meta, in concreto.', badge:'B', questions:[
+   {id:'obiettivo', type:'textarea', label:'In una frase: qual è l’obiettivo di questo progetto per voi?', prefill:'Sbarazzarci di TeamSystem e dell’app Technogym e portare tutto dentro un’unica app di proprietà, personalizzabile e che possa evolvere su ciò che ci serve.'},
+   {id:'gap', type:'textarea', label:'Cosa vorreste poter fare che oggi, con gli strumenti attuali, non riuscite a fare?', prefill:'Far prenotare i clienti in autonomia, senza una persona fisica dietro; avere prenotazioni, gettoni, schede e pagamenti in un unico posto che dialoga davvero; smettere di fare tutto a mano.'},
+   {id:'bacchetta', type:'textarea', label:'Bacchetta magica: quali 3 cose fareste sparire (o partire da sole) domani mattina?', prefill:'Le conferme di prenotazione fatte a mano; i due software separati che non si parlano; il bisogno di una persona alla reception perché il cliente possa prenotare.'},
  ]},
  {key:'ruoli', title:'Chi vede cosa', sub:'Il sistema mostra a ognuno solo ciò che gli serve. Qui trovi già la nostra proposta: confermala o correggila.', questions:[
    {id:'r_reception', type:'textarea', label:'Cosa deve poter vedere e fare la RECEPTION?', prefill:'Prenotare e spostare appuntamenti per i clienti, vedere il calendario di tutto lo staff, incassare e registrare i pagamenti, vendere pacchetti e gettoni, gestire il bar.'},
@@ -143,9 +149,11 @@ const STEPS=[
    {id:'r_cliente', type:'textarea', label:'Cosa deve poter vedere e fare il CLIENTE?', prefill:'Prenotarsi da solo usando i gettoni, vedere le proprie prenotazioni e i propri progressi, comprare altri gettoni o pacchetti, consultare la scheda di allenamento e quella alimentare.'},
    {id:'r_titolare', type:'textarea', label:'Cosa devi poter vedere e fare TU, come titolare che governa tutto?', prefill:'Vista completa su tutto: calendario di tutti, gestione di staff e servizi, pagamenti e fatturazione, assegnazione dei gettoni, e i numeri sull’andamento del centro.'},
  ]},
- {key:'chiusura', title:'Priorità & partenza', sub:'Ultimo passo, promesso.', questions:[
-   {id:'prima_cosa', type:'textarea', label:'Se potessimo sistemare una cosa sola per prima, quale sarebbe?'},
+ {key:'progetto', title:'Il progetto', sub:'Ultime cose, poi partiamo.', questions:[
    {id:'partenza', type:'chips', label:'Quando vorreste partire?', options:['Subito','Entro 1 mese','Entro 3 mesi','Sto valutando']},
+   {id:'tempo_attesa', type:'chips', label:'Quanto tempo, al massimo, siete disposti ad aspettare per una versione completa e funzionante?', options:['Prima possibile','Entro 1 mese','Entro 2–3 mesi','Non ho fretta, se è fatto bene']},
+   {id:'gestione_post', type:'chips', label:'Dopo il lancio, come immaginate la gestione del sistema?', options:['La gestiamo noi internamente (formateci)','La affidiamo a voi: gestione ed evoluzione continue','Da valutare insieme']},
+   {id:'hosting', type:'chips', label:'Dove vorreste che giri il sistema?', options:['Server virtuale (cloud)','Il nostro server locale','Vogliamo capire insieme quale conviene'], hint:'Se avete un server locale e volete usarlo o confrontarlo, i dettagli tecnici (spazio, potenza) potete farceli sapere anche dopo — magari chiedendo al vostro sistemista. Non servono per partire.'},
    {id:'altro', type:'textarea', label:'C’è altro che dovremmo sapere prima di metterci a costruire?'},
  ]},
 ]
@@ -163,8 +171,8 @@ function renderIntro(){
     <div class="kicker"><span class="dot"></span>Prima di costruire</div>
     <div style="font-size:15px;color:var(--ink2);margin-bottom:8px">Ciao Emanuele 👋</div>
     <h1>Vogliamo capirti <span class="hl">davvero</span>, non darti l’ennesimo gestionale.</h1>
-    <p class="lead">Moveo non è una palestra qualunque: è un centro dove il rapporto con la persona conta più della sala pesi — <b>personal training, pilates, nutrizione, valutazioni</b>. Sappiamo che la squadra si è ristretta (da quattro a tre) e che ogni ora dello staff è diventata preziosa: quando <b>un solo strumento</b> — la bilancia per la composizione corporea — viene prenotato da due clienti insieme, o quando calendari, pacchetti e pagamenti vivono sparsi tra app, messaggi e testa, il tempo che dovrebbe andare ai clienti si perde dietro alla gestione.</p>
-    <p class="lead">Da qui parte il progetto: un sistema cucito su <b>come lavorate voi</b>. Prima di scrivere altro codice però vogliamo mettere a fuoco due cose — <b>dov’è Moveo oggi</b> (scenario A) e <b>dove volete arrivare</b> (scenario B). Le domande qui sotto servono a questo: a farci diventare il ponte tra i due, e a costruirvi esattamente ciò che desiderate.</p>
+    <p class="lead">Moveo non è una palestra qualunque: è un centro dove il rapporto con la persona conta più della sala pesi — <b>personal training, pilates, nutrizione, valutazioni</b> — con uno staff di più persone da far girare ogni giorno. Oggi però quasi tutto passa dalle mani: le prenotazioni si fanno, si controllano e si confermano a mano, al punto che per reggere il ritmo servirebbero <b>due persone dedicate solo a fare da ponte</b> tra clienti, staff e gestionale. E questo nonostante oltre <b>€20.000 l’anno</b> di licenze — TeamSystem e l’app Technogym — che tra loro si parlano male, con una gestione a gettoni sopra e clienti che, senza qualcuno alla reception, non riescono a prenotare da soli.</p>
+    <p class="lead">Il vostro obiettivo, se abbiamo capito bene, è chiaro: liberarvi di quei due software e portare tutto dentro <b>un’unica app vostra</b>, di proprietà, da personalizzare e far evolvere su ciò che vi serve davvero. Questo questionario serve a mettere a fuoco due cose — <b>dove siete oggi</b> (scenario A) e <b>dove volete arrivare</b> (scenario B) — così da farci diventare il ponte tra i due.</p>
     <div class="bridge">
       <svg viewBox="0 0 560 130" role="img" aria-label="Dal punto A al punto B">
         <line x1="70" y1="70" x2="490" y2="70" stroke="#2a2a2a" stroke-width="2"/>
@@ -180,7 +188,7 @@ function renderIntro(){
         <path d="M255 54 L280 60 L305 54" fill="none" stroke="#8FFF00" stroke-width="1.5" opacity=".7"/>
       </svg>
     </div>
-    <div class="disc">✎ Alcune risposte sono già <b>precompilate</b>: sono l’interpretazione di George in base alla vostra conversazione, un punto di partenza per non farti ricominciare da zero. Correggile o riscrivile come vuoi — è proprio quello che ci serve.</div>
+    <div class="disc">✎ Diverse risposte sono già <b>precompilate</b>: sono l’interpretazione di George in base alla vostra conversazione, un punto di partenza per non farvi ricominciare da zero. Confermatele o riscrivetele come volete — è proprio quello che ci serve.</div>
     <div class="nav">
       <button class="btn btn-primary" onclick="goto(0)">Inizia →</button>
     </div>
@@ -204,12 +212,10 @@ function fieldHTML(q,i){
   }else if(q.type==='slider'){
     const v=cur!=null?cur:q.val
     inner=`<div class="slide-wrap"><input type="range" min="${q.min}" max="${q.max}" value="${v}" id="f_${q.id}" oninput="slide('${q.id}',this.value,'${q.suffix||''}')"><div class="slide-val" id="v_${q.id}">${v}${q.suffix||''}</div></div>`
-  }else if(q.type==='scale'){
-    let sc='';for(let n=q.min;n<=q.max;n++) sc+=`<div class="sc ${cur===n?'sel':''}" onclick="pick('${q.id}',${n},this)">${n}</div>`
-    inner=`<div class="scale">${sc}</div>`
   }
   const tag=q.prefill!==undefined?` <span class="pretag">✎ precompilato</span>`:''
-  return `<div class="q" style="animation-delay:${i*.06}s"><label class="ql">${q.label}${tag}</label>${inner}</div>`
+  const hint=q.hint?`<div class="qhint">${q.hint}</div>`:''
+  return `<div class="q" style="animation-delay:${i*.06}s"><label class="ql">${q.label}${tag}</label>${hint}${inner}</div>`
 }
 
 function renderStep(){
